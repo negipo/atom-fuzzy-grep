@@ -30,6 +30,10 @@ module.exports =
       type: 'boolean'
       default: false
       order: 6
+    showBasePath:
+      type: 'boolean'
+      default: false
+      order: 7
 
   activate: ->
     @editorSubscription = atom.commands.add 'atom-workspace',

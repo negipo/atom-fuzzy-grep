@@ -30,6 +30,8 @@ class GrepView extends SelectListView
       @preserveLastSearch = atom.config.get('atom-fuzzy-grep.preserveLastSearch') is true
     atom.config.observe 'atom-fuzzy-grep.escapeSelectedText', =>
       @escapeSelectedText = atom.config.get('atom-fuzzy-grep.escapeSelectedText') is true
+    atom.config.observe 'atom-fuzzy-grep.showBasePath', =>
+      @showBasePath = atom.config.get('atom-fuzzy-grep.showBasePath') is true
 
   getFilterKey: ->
 
@@ -42,7 +44,11 @@ class GrepView extends SelectListView
     $$ ->
       @li class: 'two-lines', =>
         fileBasePath = path.basename filePath
-        @div "#{fileBasePath}:#{line+1}", class: 'primary-line file icon icon-file-text', 'data-name': fileBasePath
+        if @showBasePath
+          displayPath = fileBasePath
+        else
+          displayPath = filePath
+        @div "#{displayPath}:#{line+1}", class: 'primary-line file icon icon-file-text', 'data-name': fileBasePath
         @div content, class: 'secondary-line'
 
   confirmed: (item)->
